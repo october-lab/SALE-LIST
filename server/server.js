@@ -9,6 +9,7 @@ import cors from 'cors';
 import sharp from 'sharp';
 import { Product, Listing } from './model.js';
 import sequelize from './db.js';
+import { fetchItemsWithSignedUrls } from './service.js';
 dotenv.config();
 
 const app = express();
@@ -169,6 +170,24 @@ app.get('/api/items', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error fetching items' });
+    }
+});
+
+app.get('/api/listing/:eventIdentifier', async (req, res) => {
+    try {
+        let eventIdentifier = req.params.eventIdentifier;
+        const eventDetails = await Listing.findOne({
+            where: {
+                eventIdentifier
+            }
+        });
+
+        const listingId = eventDetails.id;
+        const items = await fetchItemsWithSignedUrls(listingId, s3Client);
+        res.json({ eventDetails, items });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching listing' });
     }
 });
 

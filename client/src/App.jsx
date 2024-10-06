@@ -15,6 +15,7 @@ import ProfileDetailsForm from './components/ProfileDetails';
 import ContactDetails from './components/ContactDetails';
 import CongratsPage from './components/CongratsPage';
 import NavbarContent from './components/Navbar';
+import CustomerLanding from './components/CustomerLanding';
 
 
 
@@ -40,6 +41,8 @@ function App() {
             <Route path='/add-inventory' element={<AddInventory />} />
             <Route path='/home' element={<CreateListing />} /> */}
             <Route path='/add-items' element={<MultiPageForm />} />
+            <Route path='/customer-landing' element={<CustomerLanding />} />
+            <Route path='/:eventIdentifier' element={<CustomerLanding />} />
             {/* <Route path='/users' element={<Users />} />
             <Route path='/create' element={<CreateUsers />} />
             <Route path='/update/:id' element={<UpdateUsers />} /> */}

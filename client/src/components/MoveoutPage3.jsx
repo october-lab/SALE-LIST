@@ -4,6 +4,7 @@ import { PlusCircle, Trash2 } from 'lucide-react';
 import axios from 'axios';
 import AddItemPopup from './AddItemPopup';
 import { Card, CardHeader, CardBody, CardFooter, Divider, Button, Image } from "@nextui-org/react";
+import SaleItemComponent from './SaleItemComponent';
 
 const MoveoutPage3 = () => {
     const [items, setItems] = useState([]);
@@ -99,33 +100,13 @@ const MoveoutPage3 = () => {
                 </Button>
                 <div className="grid grid-cols-2 gap-4">
                     {items.map((item, index) => (
-                        <Card key={index} className="py-4">
-                            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                                <h4 className="font-bold text-large">{item.name}</h4>
-                                <p className="text-tiny uppercase font-bold">¥{item.price}</p>
-                            </CardHeader>
-                            <CardBody className="overflow-visible py-2">
-                                <Image
-                                    alt={item.name}
-                                    className="object-scale-down rounded-xl"
-                                    src={item.imageUrl}
-                                    width={270}
-                                />
-                            </CardBody>
-                            <Button
-                                isIconOnly
-                                color="danger"
-                                variant="light"
-                                onClick={() => handleRemoveItem(index)}
-                                className="absolute top-2 right-2"
-                            >
-                                <Trash2 size={20} />
-                            </Button>
-                        </Card>
+                        <div key={index}>
+                            <SaleItemComponent item={item} handleRemoveItem={handleRemoveItem} />
+                        </div>
                     ))}
                 </div>
             </CardBody>
-     
+
             <CardFooter>
                 {/* You can add a footer here if needed */}
             </CardFooter>
