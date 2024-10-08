@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { PlusCircle, Trash2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { PlusCircle } from 'lucide-react';
 import axios from 'axios';
 import AddItemPopup from './AddItemPopup';
-import { Card, CardHeader, CardBody, CardFooter, Divider, Button, Image } from "@nextui-org/react";
 import SaleItemComponent from './SaleItemComponent';
 
 const MoveoutPage3 = () => {
@@ -83,21 +82,18 @@ const MoveoutPage3 = () => {
     };
 
     return (
-        <Card className="max-w-lg mx-auto">
-            <CardHeader className="flex flex-col items-center">
-                <h1 className="text-2xl font-bold">Add Products to listing</h1>
+        <div className="card max-w-lg mx-auto bg-base-100 shadow-xl">
+            <div className="card-body">
+                <h1 className="card-title text-2xl font-bold text-center">Add Products to listing</h1>
 
-            </CardHeader>
-
-            <CardBody>
-                <Button
+                <button
                     onClick={() => setIsPopupOpen(true)}
-                    color="secondary"
-                    startContent={<PlusCircle size={20} />}
-                    className="mb-4 mx-auto"
+                    className="btn btn-secondary mb-4 mx-auto"
                 >
+                    <PlusCircle size={20} />
                     Add Product
-                </Button>
+                </button>
+
                 <div className="grid grid-cols-2 gap-4">
                     {items.map((item, index) => (
                         <div key={index}>
@@ -105,18 +101,14 @@ const MoveoutPage3 = () => {
                         </div>
                     ))}
                 </div>
-            </CardBody>
-
-            <CardFooter>
-                {/* You can add a footer here if needed */}
-            </CardFooter>
+            </div>
 
             <AddItemPopup
                 isOpen={isPopupOpen}
                 onClose={() => setIsPopupOpen(false)}
                 onAddItem={handleAddItem}
             />
-        </Card>
+        </div>
     );
 };
 

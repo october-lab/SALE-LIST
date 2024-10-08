@@ -3,7 +3,6 @@ import { Instagram, Phone, Twitter, SendIcon, MessageCircleCode } from 'lucide-r
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardHeader, CardBody, CardFooter, Divider, Button, Input } from "@nextui-org/react";
 
 const isJsonString = (str) => {
     try {
@@ -107,77 +106,111 @@ const ContactDetails = () => {
     };
 
     return (
-        <Card className="max-w-md mx-auto">
-            <CardHeader className="flex flex-col items-center">
-                <h1 className="text-3xl font-bold">Add your contact details</h1>
-                <p className="text-default-500">
+        <div className="card bg-base-100 shadow-xl max-w-md mx-auto">
+            <div className="card-body">
+                <h1 className="card-title text-3xl font-bold text-center">Add your contact details</h1>
+                <p className="text-center">
                     Add at least one contact detail so that people can contact you.
                 </p>
-            </CardHeader>
 
-            <CardBody>
                 <div className="space-y-4">
-                    <Input
-                        type="tel"
-                        label="Phone number"
-                        placeholder="Enter your phone number"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        startContent={<Phone className="text-blue-500" />}
-                    />
-                    <Input
-                        type="tel"
-                        label="WhatsApp number"
-                        placeholder="Enter your WhatsApp number"
-                        value={whatsapp}
-                        onChange={(e) => setWhatsapp(e.target.value)}
-                        startContent={<MessageCircleCode className="text-green-500" />}
-                    />
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Phone number</span>
+                        </label>
+                        <label className="input-group">
+                            <span><Phone className="text-blue-500" /></span>
+                            <input
+                                type="tel"
+                                placeholder="Enter your phone number"
+                                className="input input-bordered w-full"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                            />
+                        </label>
+                    </div>
 
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">WhatsApp number</span>
+                        </label>
+                        <label className="input-group">
+                            <span><MessageCircleCode className="text-green-500" /></span>
+                            <input
+                                type="tel"
+                                placeholder="Enter your WhatsApp number"
+                                className="input input-bordered w-full"
+                                value={whatsapp}
+                                onChange={(e) => setWhatsapp(e.target.value)}
+                            />
+                        </label>
+                    </div>
 
-                    <h2 className="text-xl font-semibold text-center">Suggested platforms</h2>
+                    <h2 className="text-xl font-semibold text-center mt-6">Suggested platforms</h2>
 
-                    <Input
-                        type="text"
-                        label="Instagram username"
-                        placeholder="Enter your Instagram username"
-                        value={instagram}
-                        onChange={(e) => setInstagram(e.target.value)}
-                        startContent={<Instagram className="text-pink-500" />}
-                    />
-                    <Input
-                        type="text"
-                        label="Twitter handle"
-                        placeholder="Enter your Twitter handle"
-                        value={twitter}
-                        onChange={(e) => setTwitter(e.target.value)}
-                        startContent={<Twitter className="text-blue-400" />}
-                    />
-                    <Input
-                        type="text"
-                        label="Telegram username"
-                        placeholder="Enter your Telegram username"
-                        value={telegram}
-                        onChange={(e) => setTelegram(e.target.value)}
-                        startContent={<SendIcon className="text-blue-600" />}
-                    />
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Instagram username</span>
+                        </label>
+                        <label className="input-group">
+                            <span><Instagram className="text-pink-500" /></span>
+                            <input
+                                type="text"
+                                placeholder="Enter your Instagram username"
+                                className="input input-bordered w-full"
+                                value={instagram}
+                                onChange={(e) => setInstagram(e.target.value)}
+                            />
+                        </label>
+                    </div>
+
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Twitter handle</span>
+                        </label>
+                        <label className="input-group">
+                            <span><Twitter className="text-blue-400" /></span>
+                            <input
+                                type="text"
+                                placeholder="Enter your Twitter handle"
+                                className="input input-bordered w-full"
+                                value={twitter}
+                                onChange={(e) => setTwitter(e.target.value)}
+                            />
+                        </label>
+                    </div>
+
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Telegram username</span>
+                        </label>
+                        <label className="input-group">
+                            <span><SendIcon className="text-blue-600" /></span>
+                            <input
+                                type="text"
+                                placeholder="Enter your Telegram username"
+                                className="input input-bordered w-full"
+                                value={telegram}
+                                onChange={(e) => setTelegram(e.target.value)}
+                            />
+                        </label>
+                    </div>
                 </div>
 
                 {contactError && (
-                    <p className="text-danger text-sm mt-2">{contactError}</p>
+                    <p className="text-error text-sm mt-2">{contactError}</p>
                 )}
-            </CardBody>
 
-            <CardFooter>
-                <Button
-                    onClick={handleContinue}
-                    color="primary"
-                    className="w-full"
-                >
-                    Continue
-                </Button>
-            </CardFooter>
-        </Card>
+                <div className="card-actions justify-end mt-6">
+                    <button
+                        onClick={handleContinue}
+                        className="btn btn-primary w-full"
+                    >
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 };
 

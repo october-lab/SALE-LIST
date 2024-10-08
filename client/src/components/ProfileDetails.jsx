@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { PlusCircle, Info, MapPin } from 'lucide-react'; // Added Info icon for description
-import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Card, CardHeader, CardBody, CardFooter, Divider, Button, Input, Textarea } from "@nextui-org/react";
 
 const isJsonString = (str) => {
     try {
@@ -142,76 +140,94 @@ const ProfileDetailsForm = () => {
     };
 
     return (
-        <Card className="max-w-md mx-auto">
-            <CardHeader className="flex flex-col items-center">
-                <h1 className="text-3xl font-bold">Add Listing Details</h1>
-            </CardHeader>
+        <div className="card bg-base-100 shadow-xl max-w-md mx-auto">
+            <div className="card-body">
+                <h1 className="card-title text-3xl font-bold justify-center">Add Listing Details</h1>
 
-            <CardBody>
                 <div className="mb-6">
                     <h2 className="text-lg font-semibold mb-3">Select a profile image</h2>
                     <div className="flex justify-center space-x-4">
                         {profileImages.map((image) => (
-                            <Button
+                            <button
                                 key={image.id}
                                 onClick={() => setSelectedImage(image.id)}
-                                className={`w-16 h-16 min-w-unit-16 rounded-full overflow-hidden ${selectedImage === image.id ? 'border-2 border-purple-500' : ''}`}
+                                className={`btn btn-circle w-16 h-16 p-0 overflow-hidden ${selectedImage === image.id ? 'ring ring-primary ring-offset-base-100 ring-offset-2' : ''}`}
                             >
                                 <div className="w-full h-full flex">
                                     <div className={`w-1/2 ${image.colors[0]}`}></div>
                                     <div className={`w-1/2 ${image.colors[1]}`}></div>
                                 </div>
-                            </Button>
+                            </button>
                         ))}
-                        <Button className="w-16 h-16 min-w-unit-16 rounded-full">
+                        <button className="btn btn-circle w-16 h-16">
                             <PlusCircle className="w-8 h-8 text-gray-400" />
-                        </Button>
+                        </button>
                     </div>
                 </div>
 
                 <div className="mb-6">
                     <h2 className="text-lg font-semibold mb-3">Add Listing name, description, and location</h2>
-                    <Input
-                        type="text"
-                        placeholder="Listing name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        startContent={<Info className="text-gray-500" />}
-                        isInvalid={!!nameError}
-                        errorMessage={nameError}
-                        className="mb-3"
-                    />
-                    <Textarea
-                        placeholder="Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        isInvalid={!!descriptionError}
-                        errorMessage={descriptionError}
-                        className="mb-2"
-                    />
-                    <div className="text-right text-sm text-gray-500 mb-2">{description.length}/80</div>
-                    <Input
-                        type="text"
-                        placeholder="Location"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        startContent={<MapPin className="text-gray-500" />}
-                        isInvalid={!!locationError}
-                        errorMessage={locationError}
-                    />
-                </div>
-            </CardBody>
+                    <div className="form-control w-full">
+                        <label className="label">
+                            <span className="label-text">Listing name</span>
+                        </label>
+                        <div className="input-group">
+                            <span><Info className="text-gray-500" /></span>
+                            <input
+                                type="text"
+                                placeholder="Listing name"
+                                className={`input input-bordered w-full ${nameError ? 'input-error' : ''}`}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </div>
+                        {nameError && <label className="label"><span className="label-text-alt text-error">{nameError}</span></label>}
+                    </div>
 
-            <CardFooter>
-                <Button
-                    onClick={handleContinue}
-                    color="primary"
-                    className="w-full"
-                >
-                    Continue
-                </Button>
-            </CardFooter>
-        </Card>
+                    <div className="form-control w-full mt-4">
+                        <label className="label">
+                            <span className="label-text">Description</span>
+                        </label>
+                        <textarea
+                            placeholder="Description"
+                            className={`textarea textarea-bordered h-24 ${descriptionError ? 'textarea-error' : ''}`}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        ></textarea>
+                        <label className="label">
+                            <span className="label-text-alt text-gray-500">{description.length}/80</span>
+                            {descriptionError && <span className="label-text-alt text-error">{descriptionError}</span>}
+                        </label>
+                    </div>
+
+                    <div className="form-control w-full mt-4">
+                        <label className="label">
+                            <span className="label-text">Location</span>
+                        </label>
+                        <div className="input-group">
+                            <span><MapPin className="text-gray-500" /></span>
+                            <input
+                                type="text"
+                                placeholder="Location"
+                                className={`input input-bordered w-full ${locationError ? 'input-error' : ''}`}
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                            />
+                        </div>
+                        {locationError && <label className="label"><span className="label-text-alt text-error">{locationError}</span></label>}
+                    </div>
+                </div>
+
+                <div className="card-actions justify-end">
+                    <button
+                        onClick={handleContinue}
+                        className="btn btn-primary w-full"
+                    >
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 };
 
