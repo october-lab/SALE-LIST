@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { PlusCircle, Info, MapPin } from 'lucide-react'; // Added Info icon for description
+import { PlusCircle, Info, MapPin, NotebookTabs } from 'lucide-react'; // Added Info icon for description
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -166,54 +166,49 @@ const ProfileDetailsForm = () => {
                 </div>
 
                 <div className="mb-6">
-                    <h2 className="text-lg font-semibold mb-3">Add Listing name, description, and location</h2>
                     <div className="form-control w-full">
-                        <label className="label">
-                            <span className="label-text">Listing name</span>
-                        </label>
-                        <div className="input-group">
-                            <span><Info className="text-gray-500" /></span>
-                            <input
-                                type="text"
-                                placeholder="Listing name"
-                                className={`input input-bordered w-full ${nameError ? 'input-error' : ''}`}
+                        <label className="input input-bordered flex items-center gap-2">
+                            <NotebookTabs className="w-4 h-4" />
+                            <input type="text"
+                                className={`grow ${nameError ? 'input-error' : ''}`}
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                            />
-                        </div>
+                                placeholder="Listing Name" />
+                        </label>
                         {nameError && <label className="label"><span className="label-text-alt text-error">{nameError}</span></label>}
                     </div>
 
                     <div className="form-control w-full mt-4">
-                        <label className="label">
-                            <span className="label-text">Description</span>
+                        <label className="form-control">
+                            <textarea
+                                placeholder="Description"
+                                className={`textarea textarea-bordered h-24 ${descriptionError ? 'textarea-error' : ''}`}
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                            ></textarea>
                         </label>
-                        <textarea
-                            placeholder="Description"
-                            className={`textarea textarea-bordered h-24 ${descriptionError ? 'textarea-error' : ''}`}
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        ></textarea>
-                        <label className="label">
+
+                        <div className="flex justify-between pt-2">
                             <span className="label-text-alt text-gray-500">{description.length}/80</span>
+                            <span className="badge badge-info">Optional</span>
+                        </div>
+                        <div>
                             {descriptionError && <span className="label-text-alt text-error">{descriptionError}</span>}
-                        </label>
+                        </div>
                     </div>
 
                     <div className="form-control w-full mt-4">
-                        <label className="label">
-                            <span className="label-text">Location</span>
-                        </label>
-                        <div className="input-group">
-                            <span><MapPin className="text-gray-500" /></span>
+
+                        <label className="input input-bordered flex items-center gap-2">
+                            <MapPin className="w-4 h-4" />
                             <input
                                 type="text"
                                 placeholder="Location"
-                                className={`input input-bordered w-full ${locationError ? 'input-error' : ''}`}
+                                className={`grow${locationError ? 'input-error' : ''}`}
                                 value={location}
                                 onChange={(e) => setLocation(e.target.value)}
                             />
-                        </div>
+                        </label>
                         {locationError && <label className="label"><span className="label-text-alt text-error">{locationError}</span></label>}
                     </div>
                 </div>
