@@ -4,7 +4,7 @@ import { InstagramIcon, MessageCircle, PhoneCallIcon, Trash2, TwitterIcon } from
 
 let SaleItemComponent = ({ item, handleRemoveItem, index }) => {
     return (
-        <div className="card card-compact  bg-base-100 shadow-xl">
+        <div className="card card-compact  bg-base-100 shadow-xl border-2 border-neutral ">
             <figure><img src={item.imageUrl} alt={item.name} className="object-scale-down" /></figure>
             <div className="card-body">
                 <h2 className="card-title text-tiny uppercase font-bold">{item.name}</h2>
@@ -25,22 +25,19 @@ let SaleItemComponent = ({ item, handleRemoveItem, index }) => {
 
 export const CustomerSaleItemComponent = ({ item }) => {
     return (
-        <div className="card car bg-base-100 shadow-xl">
-            <figure><img src={item.imageUrl} alt={item.name} className="object-scale-down" /></figure>
-            <div className="card-body">
-                <h2 className="card-title text-tiny uppercase font-bold">{item.name}</h2>
-                <p className="text-default-500">${item.price}</p>
-                <div className="card-actions justify-between items-center">
-                    <p className="text-sm">Contact Seller</p>
-                    <div className="flex gap-2">
-                        <PhoneCallIcon className="cursor-pointer" />
-                        <MessageCircle className="cursor-pointer" />
-                        <InstagramIcon className="cursor-pointer" />
-                        <TwitterIcon className="cursor-pointer" />
-                    </div>
-                </div>
+        <div>
+            <div className="flex flex-col items-center bg-white text-white p-1 rounded-lg shadow-lg border border-gray-600">
+                <figure className="">
+                    <img src={item.imageUrl} alt={item.name} className="w-full h-auto object-cover rounded-md" />
+                </figure>
+            </div>
+            <div className="text-left">
+                <h2 className="text-lg font-medium  mb-1">{item.name}</h2>
+                <p className="text-md font-thin ">${item.price}</p>
             </div>
         </div>
+
+
     )
 }
 

@@ -79,6 +79,10 @@ export const Listing = sequelize.define('Listing', {
     telegram: {
         type: DataTypes.STRING,
         allowNull: true,
+    },
+    selectedImage: {
+        type: DataTypes.STRING,
+        allowNull: true,
     }
 });
 

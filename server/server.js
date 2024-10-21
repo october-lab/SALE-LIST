@@ -29,7 +29,8 @@ const Item = mongoose.model('Item', {
 
 
 // Sync the model with the database
-sequelize.sync().then(() => {
+
+sequelize.sync({ alter: true }).then(() => {
     console.log('Database synchronized');
 });
 
@@ -68,10 +69,24 @@ function get8DigitUuid() {
 app.post('/api/createListing', async (req, res) => {
     const transaction = await sequelize.transaction();
     try {
-        const { name, email, description, location, phone, instagram, telegram, twitter, whatsapp } = req.body;
+        const { name, email, description, location, phone, instagram, telegram, twitter, whatsapp, selectedImage } = req.body;
 
         const eventIdentifier = get8DigitUuid();
-        const listing = await Listing.create({ userId: 124, name, email, description, location, phone, instagram, telegram, twitter, whatsapp, eventIdentifier: eventIdentifier, active: true }, { transaction });
+        const listing = await Listing.create({
+            userId: 124,
+            name,
+            email,
+            description,
+            location,
+            phone,
+            instagram,
+            telegram,
+            twitter,
+            whatsapp,
+            eventIdentifier: eventIdentifier,
+            selectedImage,
+            active: true
+        }, { transaction });
 
         await transaction.commit();
         res.status(201).json(listing);
@@ -88,13 +103,26 @@ app.post('/api/createListing', async (req, res) => {
 app.post('/api/updateListing', async (req, res) => {
     const transaction = await sequelize.transaction();
     try {
-        const { name, email, description, location, phone, instagram, telegram, twitter, whatsapp, id } = req.body;
+        const { name, email, description, location, phone, instagram, telegram, twitter, whatsapp, id, selectedImage } = req.body;
         let currentListing = await Listing.findOne({
             where: {
                 id: id
             }
         })
-        const listing = await currentListing.update({ userId: 124, name, email, description, location, phone, instagram, telegram, twitter, whatsapp, active: true }, { transaction });
+        const listing = await currentListing.update({
+            userId: 124,
+            name,
+            email,
+            description,
+            location,
+            phone,
+            instagram,
+            telegram,
+            twitter,
+            whatsapp,
+            selectedImage,
+            active: true,
+        }, { transaction });
 
         await transaction.commit();
         res.status(201).json(listing);

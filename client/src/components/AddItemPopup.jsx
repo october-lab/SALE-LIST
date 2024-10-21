@@ -24,7 +24,7 @@ const AddItemPopup = ({ isOpen, onClose, onAddItem }) => {
 
     return (
         <div className="modal modal-open">
-            <div className="modal-box">
+            <div className="modal-box border-2 border-neutral ">
                 <h2 className="text-2xl font-bold mb-4">Add New Item</h2>
                 <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                     <div className="card mb-6 bg-base-200">
@@ -100,7 +100,7 @@ const AddItemPopup = ({ isOpen, onClose, onAddItem }) => {
                         <button type="button" className="btn btn-ghost" onClick={onClose}>
                             Cancel
                         </button>
-                        <button type="submit" className="btn btn-primary">
+                        <button type="submit" className="btn btn-neutral">
                             Add Item
                         </button>
                     </div>

@@ -204,7 +204,7 @@ const ContactDetails = () => {
                 <div className="card-actions justify-end mt-6">
                     <button
                         onClick={handleContinue}
-                        className="btn btn-primary w-full"
+                        className="btn btn-neutral w-full"
                     >
                         Continue
                     </button>

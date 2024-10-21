@@ -82,13 +82,13 @@ const MoveoutPage3 = () => {
     };
 
     return (
-        <div className="card max-w-lg mx-auto bg-base-100 shadow-xl">
+        <div className="card max-w-lg mx-auto bg-base-100 shadow-xl border-2 border-neutral">
             <div className="card-body">
                 <h1 className="card-title text-2xl font-bold text-center">Add Products to listing</h1>
 
                 <button
                     onClick={() => setIsPopupOpen(true)}
-                    className="btn btn-secondary mb-4 mx-auto"
+                    className="btn btn-outline mb-4 mx-auto"
                 >
                     <PlusCircle size={20} />
                     Add Product
