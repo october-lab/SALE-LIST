@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Upload } from 'lucide-react';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+
 
 const AddItemPopup = ({ isOpen, onClose, onAddItem }) => {
     const [newItem, setNewItem] = useState({ name: '', price: '', age: '', description: '', image: null });
@@ -24,19 +27,19 @@ const AddItemPopup = ({ isOpen, onClose, onAddItem }) => {
 
     return (
         <div className="modal modal-open">
-            <div className="modal-box border-2 border-neutral ">
-                <h2 className="text-2xl font-bold mb-4">Add New Item</h2>
+            <div className="modal-box border-neutral space-y-6 bg-zinc-900 p-4 rounded-lg shadow-lg">
+                <h1 className="text-2xl font-bold text-white">Create your listing</h1>
                 <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-                    <div className="card mb-6 bg-base-200">
+                    <div className="card mb-6 bg-neutral-800">
                         <div className="card-body p-2">
-                            <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-lg cursor-pointer hover:bg-base-300">
+                            <label className="flex flex-col items-center justify-center w-full h-40 rounded-lg cursor-pointer">
                                 {newItem.image ? (
                                     <img src={URL.createObjectURL(newItem.image)} alt="Preview" className="w-full h-full object-contain rounded-lg" />
                                 ) : (
                                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                        <Upload className="w-8 h-8 mb-2 text-base-content opacity-60" />
-                                        <p className="mb-1 text-sm text-base-content"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                                        <p className="text-xs text-base-content opacity-60">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                        <Upload className="w-8 h-8 mb-2 text-white opacity-60" />
+                                        <p className="mb-1 text-sm  text-white"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                                        <p className="text-xs  opacity-60 text-white">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                                     </div>
                                 )}
                                 <input type="file" name="image" accept="image/*" onChange={handleItemChange} className="hidden" />
@@ -45,62 +48,52 @@ const AddItemPopup = ({ isOpen, onClose, onAddItem }) => {
                     </div>
                     <div className="space-y-4">
                         <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Item Name</span>
-                            </label>
-                            <input
+                            <Input
                                 type="text"
                                 name="name"
+                                placeholder="Item Name"
                                 value={newItem.name}
+                                className="w-full p-3 rounded-lg bg-black border-0 text-white"
                                 onChange={handleItemChange}
-                                className="input input-bordered"
                                 required
                             />
                         </div>
                         <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Price</span>
-                            </label>
-                            <input
+                            <Input
                                 type="number"
                                 name="price"
+                                placeholder="Price"
                                 value={newItem.price}
                                 onChange={handleItemChange}
-                                className="input input-bordered"
-                                required
+                                className="w-full p-3 rounded-lg bg-black border-0 text-white"
                             />
                         </div>
                         <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Age</span>
-                            </label>
-                            <input
+                            <Input
                                 type="number"
                                 name="age"
+                                placeholder="Age"
                                 value={newItem.age}
                                 onChange={handleItemChange}
-                                className="input input-bordered"
-                                required
+                                className="w-full p-3 rounded-lg bg-black border-0 text-white"
                             />
                         </div>
                         <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Description</span>
-                            </label>
-                            <textarea
+            
+                            <Textarea
                                 name="description"
+                                placeholder="Description"
                                 value={newItem.description}
                                 onChange={handleItemChange}
-                                className="textarea textarea-bordered"
-                                required
-                            ></textarea>
+                                className="w-full p-3 rounded-lg bg-black text-white border-0"
+                            />
                         </div>
                     </div>
                     <div className="modal-action">
-                        <button type="button" className="btn btn-ghost" onClick={onClose}>
+                        <button type="button"  className="btn btn-sm bg-black border-0 text-red-300 hover:bg-gray-800 hover:text-white" onClick={onClose}>
                             Cancel
                         </button>
-                        <button type="submit" className="btn btn-neutral">
+                        <button type="submit" className="btn btn-sm bg-white border-0 text-black hover:bg-gray-100">
                             Add Item
                         </button>
                     </div>

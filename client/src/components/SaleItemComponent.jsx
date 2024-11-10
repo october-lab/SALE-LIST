@@ -22,6 +22,28 @@ let SaleItemComponent = ({ item, handleRemoveItem, index }) => {
 
 
 
+export const InventoryItemComponent = ({ item }) => {
+    const imageUrl = item.imageUrl ? item.imageUrl : URL.createObjectURL(item.image);
+    return (
+        <div
+            className="aspect-square rounded-lg hover:scale-105 cursor-pointer"
+        >
+            <figure>
+                <img src={imageUrl} alt={item.name} className="w-full h-full rounded-md object-cover" />
+            </figure>
+            <div className="flex flex-row justify-between text-white mt-2">
+                <h2 className="font-light text-sm">{item.name}</h2>
+                <p className="text-default-500 text-sm">${item.price}</p>
+            </div>
+
+        </div>
+
+    )
+}
+
+
+
+
 
 export const CustomerSaleItemComponent = ({ item }) => {
     return (

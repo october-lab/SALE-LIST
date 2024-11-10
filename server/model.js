@@ -19,10 +19,10 @@ export const Product = sequelize.define('Product', {
         type: DataTypes.TEXT,
         allowNull: true,
     },
-    listingId: {
-        type: DataTypes.NUMBER,
-        allowNull: false,
-    }
+    eventIdentifier: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 
 });
 
@@ -49,6 +49,10 @@ export const Listing = sequelize.define('Listing', {
         allowNull: true,
     },
     bgColor: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    theme: {
         type: DataTypes.STRING,
         allowNull: true,
     },

@@ -5,10 +5,10 @@ import { Product } from './model.js';
 dotenv.config();
 
 
-export const fetchItemsWithSignedUrls = async (listingId, s3Client) => {
+export const fetchItemsWithSignedUrls = async (eventIdentifier, s3Client) => {
     const items2 = await Product.findAll({
         raw: true, where: {
-            listingId
+            eventIdentifier
         }
     });
 

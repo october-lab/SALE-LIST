@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
-import MultiPageForm from './components/MoveoutPage3';
+import MultiPageForm from './components/SaleItemContainer';
 import { useContext } from 'react';
 import { AppContext } from './context/AppContext';
 import ProfileDetailsForm from './components/ProfileDetails';
@@ -37,8 +37,7 @@ function App() {
             <Route path="/:eventIdentifier" element={<CustomerLanding />} />
             <Route element={<Layout />}>
               <Route path="/create" >
-                <Route path="listing-details" element={<ProfileDetailsForm />} />
-                <Route path="contact-details" element={<ContactDetails />} />
+                <Route path="listing-details/:eventIdentifier?" element={<ProfileDetailsForm />} />
                 <Route path="congrats" element={<CongratsPage />} />
               </Route>
               <Route path='/add-items' element={<MultiPageForm />} />

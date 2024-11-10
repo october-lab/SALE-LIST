@@ -4,7 +4,8 @@ import { CustomerSaleItemComponent } from './SaleItemComponent';
 import axios from 'axios';
 import { isEmpty } from 'lodash';
 import { useParams } from 'react-router-dom';
-import { Facebook, Instagram, Mail, MapPin, PhoneCallIcon, Twitter } from 'lucide-react';
+import { Facebook, Instagram, Mail, MapPin, Twitter } from 'lucide-react';
+import { THEMES } from '../../constants';
 
 const CustomerLanding = () => {
     const [listingDetails, setListingDetails] = useState({});
@@ -46,8 +47,9 @@ const CustomerLanding = () => {
     }
 
     return (
-        <div className="min-h-screen  flex flex-col">
-            <div className="max-w-md mx-auto  overflow-hidden md:border-2 border-neutral flex-grow">
+
+        <div className={`min-h-screen  flex flex-col ${THEMES[listingDetails.eventDetails.theme].bgColor}`}>
+            <div className={`max-w-md md:max-w-xl mx-auto  overflow-hidden flex-grow ${THEMES[listingDetails.eventDetails.theme].mainColor}`}>
                 <div className="relative">
                     {listingDetails.eventDetails.selectedImage ?
                         <img src={listingDetails.eventDetails.selectedImage} alt="Background" className="w-full h-64 object-cover" />
@@ -64,7 +66,7 @@ const CustomerLanding = () => {
                     </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-6 text-white ">
 
                     <h2 className="text-xl font-semibold mb-4">Contact Me</h2>
 
@@ -82,7 +84,7 @@ const CustomerLanding = () => {
                         ))}
                     </div>
                 </div>
-                <footer className=" py-4">
+                <footer className=" py-4 text-white">
                     <div className="max-w-md mx-auto flex flex-col items-center">
                         <div className="flex space-x-4 mb-2">
                             <a href="#" className="hover:text-gray-400">

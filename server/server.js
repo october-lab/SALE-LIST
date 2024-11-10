@@ -66,47 +66,67 @@ function get8DigitUuid() {
 }
 
 
-app.post('/api/createListing', async (req, res) => {
+app.get('/api/getListingId', async (req, res) => {
     const transaction = await sequelize.transaction();
     try {
-        const { name, email, description, location, phone, instagram, telegram, twitter, whatsapp, selectedImage } = req.body;
-
         const eventIdentifier = get8DigitUuid();
         const listing = await Listing.create({
             userId: 124,
-            name,
-            email,
-            description,
-            location,
-            phone,
-            instagram,
-            telegram,
-            twitter,
-            whatsapp,
             eventIdentifier: eventIdentifier,
-            selectedImage,
             active: true
         }, { transaction });
 
         await transaction.commit();
-        res.status(201).json(listing);
+        res.status(201).json({ eventIdentifier: eventIdentifier });
     }
     catch (error) {
         await transaction.rollback();
         console.error(error);
-        res.status(500).json({ message: 'Error uploading item' });
+        res.status(500).json({ message: 'error in creating listing id' });
     }
 });
+
+// app.post('/api/createListing', async (req, res) => {
+//     const transaction = await sequelize.transaction();
+//     try {
+//         const { name, email, description, location, phone, instagram, telegram, twitter, whatsapp, selectedImage } = req.body;
+
+//         const eventIdentifier = get8DigitUuid();
+//         const listing = await Listing.create({
+//             userId: 124,
+//             name,
+//             email,
+//             description,
+//             location,
+//             phone,
+//             instagram,
+//             telegram,
+//             twitter,
+//             whatsapp,
+//             eventIdentifier: eventIdentifier,
+//             selectedImage,
+//             active: true
+//         }, { transaction });
+
+//         await transaction.commit();
+//         res.status(201).json(listing);
+//     }
+//     catch (error) {
+//         await transaction.rollback();
+//         console.error(error);
+//         res.status(500).json({ message: 'Error uploading item' });
+//     }
+// });
 
 
 
 app.post('/api/updateListing', async (req, res) => {
     const transaction = await sequelize.transaction();
     try {
-        const { name, email, description, location, phone, instagram, telegram, twitter, whatsapp, id, selectedImage } = req.body;
+        const { name, email, description, location, phone, instagram, telegram, twitter, whatsapp, id, selectedImage, eventIdentifier, theme } = req.body;
         let currentListing = await Listing.findOne({
             where: {
-                id: id
+                eventIdentifier: eventIdentifier
             }
         })
         const listing = await currentListing.update({
@@ -121,6 +141,7 @@ app.post('/api/updateListing', async (req, res) => {
             twitter,
             whatsapp,
             selectedImage,
+            theme,
             active: true,
         }, { transaction });
 
@@ -139,7 +160,7 @@ app.post('/api/updateListing', async (req, res) => {
 app.post('/api/items', upload.single('image'), async (req, res) => {
     const transaction = await sequelize.transaction();
     try {
-        const { name, price, listingId } = req.body;
+        const { name, price, eventIdentifier } = req.body;
         const file = req.file;
 
         const fileBuffer = await sharp(file.buffer)
@@ -161,7 +182,7 @@ app.post('/api/items', upload.single('image'), async (req, res) => {
 
         const command = new PutObjectCommand(putObjectParams);
         let uploadres = await s3Client.send(command);
-        const product = await Product.create({ name, price, imageUrl: uploadres.Location, awsImageKey: putObjectParams.Key, listingId }, { transaction });
+        const product = await Product.create({ name, price, imageUrl: uploadres.Location, awsImageKey: putObjectParams.Key, eventIdentifier }, { transaction });
         await transaction.commit();
         res.status(201).json(product);
     }
@@ -175,13 +196,12 @@ app.post('/api/items', upload.single('image'), async (req, res) => {
 // API route to get all items with signed URLs
 app.get('/api/items', async (req, res) => {
     try {
-        let listingId = req.query.listingId;
+        let eventIdentifier = req.query.eventIdentifier;
         const items2 = await Product.findAll({
             raw: true, where: {
-                listingId
+                eventIdentifier
             }
         });
-        console.log(items2)
         const itemsWithSignedUrls = await Promise.all(items2.map(async (item) => {
             const params = {
                 Bucket: process.env.S3_BUCKET_NAME,
@@ -201,6 +221,7 @@ app.get('/api/items', async (req, res) => {
     }
 });
 
+
 app.get('/api/listing/:eventIdentifier', async (req, res) => {
     try {
         let eventIdentifier = req.params.eventIdentifier;
@@ -210,12 +231,38 @@ app.get('/api/listing/:eventIdentifier', async (req, res) => {
             }
         });
 
-        const listingId = eventDetails.id;
-        const items = await fetchItemsWithSignedUrls(listingId, s3Client);
+        const items = await fetchItemsWithSignedUrls(eventIdentifier, s3Client);
         res.json({ eventDetails, items });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error fetching listing' });
+    }
+});
+
+
+app.get('/api/details/:eventIdentifier', async (req, res) => {
+    try {
+        let eventIdentifier = req.params.eventIdentifier;
+        const eventDetails = await Listing.findOne({
+            where: {
+                eventIdentifier
+            }
+        });
+        res.json({ eventDetails });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching listing' });
+    }
+});
+
+app.get('/api/items/:eventIdentifier', async (req, res) => {
+    try {
+        let eventIdentifier = req.params.eventIdentifier;
+        const items = await fetchItemsWithSignedUrls(eventIdentifier, s3Client);
+        res.json(items);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching items' });
     }
 });
 
